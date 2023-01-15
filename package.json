@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/gurbaj5124871/image-upload-resize-serverless#readme",
   "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.250.0",
     "@serverless/typescript": "^3.25.0",
+    "@types/aws-lambda": "^8.10.109",
     "serverless": "^3.26.0",
     "serverless-esbuild": "^1.37.0",
     "serverless-offline": "^12.0.4",
@@ -26,7 +28,15 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@middy/core": "^4.1.0",
+    "@middy/http-cors": "^4.1.0",
+    "@middy/http-json-body-parser": "^4.1.0",
+    "@middy/http-security-headers": "^4.1.0",
+    "@middy/secrets-manager": "^4.1.0",
+    "aws-sdk": "^2.1295.0",
     "dotenv": "^16.0.3",
-    "joi": "^17.7.0"
+    "http-errors": "^2.0.0",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0"
   }
 }
