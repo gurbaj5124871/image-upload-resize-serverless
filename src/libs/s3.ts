@@ -1,4 +1,9 @@
 import S3 from "aws-sdk/clients/s3";
+import {
+  createPresignedPost,
+  PresignedPostOptions,
+} from "@aws-sdk/s3-presigned-post";
+import { Conditions } from "@aws-sdk/s3-presigned-post/dist-types/types";
 import { Readable } from "stream";
 import { config } from "../config";
 
@@ -7,6 +12,35 @@ const s3 = new S3({
   signatureVersion: "v4",
   region: config.aws.region,
 });
+
+const uploadSizeMinMaxRange = {
+  min: 1,
+  max: 20971520, // 20 MB
+};
+const presignedUrlValidityInSeconds = 20 * 60;
+
+export const getPresignedURL = async function (path: string) {
+  const conditions: Conditions[] = [
+    ["starts-with", "$key", `${path}`],
+    [
+      "content-length-range",
+      uploadSizeMinMaxRange.min,
+      uploadSizeMinMaxRange.max,
+    ],
+    ["starts-with", "$Content-Type", "image/"],
+  ];
+
+  const params: PresignedPostOptions = {
+    Bucket: config.aws.s3.bucketName,
+    Key: path,
+    Expires: presignedUrlValidityInSeconds,
+    Conditions: conditions,
+  };
+
+  const url = await createPresignedPost(s3, params);
+
+  return url;
+};
 
 export const uploadToS3 = function (
   upload: {
