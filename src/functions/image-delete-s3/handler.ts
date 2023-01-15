@@ -14,9 +14,10 @@ const ImageDeleteS3: ValidatedEventAPIGatewayProxyEvent<
   {},
   imageDeleteReqQuerySchemaType
 > = async (event) => {
+  const { userID } = event.authDecoded;
   const { url } = event.queryStringParameters;
 
-  await deleteImageFromS3({ url });
+  await deleteImageFromS3({ userID, url });
 
   return formatJSONResponse({
     message: "Images Deleted successfully",
