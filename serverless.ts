@@ -5,7 +5,8 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: "2",
   configValidationMode: "error",
   custom: {
-    defaultStage: "develop",
+    defaultNodeEnv: "production",
+    defaultDeployEnv: "develop",
     defaultRegion: "us-east-1",
   },
   plugins: ["serverless-offline", "serverless-esbuild"],
@@ -13,7 +14,7 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs14.x",
     region: "${opt:region, self:custom.defaultRegion}" as "us-east-1",
-    stage: "${opt:stage, self:custom.defaultStage}",
+    stage: "${opt:stage, self:custom.defaultDeployEnv}",
     iamRoleStatements: [
       {
         Effect: "Allow",
@@ -33,7 +34,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       REGION: "${opt:region, self:custom.defaultRegion}",
-      STAGE: "${opt:stage, self:custom.defaultStage}",
+      DEPLOY_ENV: "${opt:stage, self:custom.defaultDeployEnv}",
+      NODE_ENV: "${opt:node-env, self:custom.defaultNodeEnv}",
     },
     versionFunctions: false,
     timeout: 29,
