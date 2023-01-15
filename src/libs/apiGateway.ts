@@ -5,11 +5,7 @@ import type {
 } from "aws-lambda";
 
 interface AuthTokenDecoded {
-  agent_id: string;
-  role_ids: string[];
-  roleIDs: string[];
-  userFirstName: string;
-  userLastName: string;
+  userID: string;
 }
 
 type ValidatedAndAuthenticatedAPIGatewayProxyEvent<Body, Params> = Omit<

@@ -38,7 +38,6 @@ export const restApi = (
   }: {
     authenticate: {
       isEnabled: Boolean;
-      type: "jwt" | "basic";
     };
     reqHeadersSchema?: JoiObjectSchema<any>;
     reqQueryParamsSchema?: JoiObjectSchema<any>;
