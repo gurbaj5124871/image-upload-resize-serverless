@@ -1,7 +1,9 @@
 import "dotenv/config";
 import * as Joi from "joi";
 
-export const config = {
+let isConfigValidated = false;
+
+const conf = {
   env: process.env.NODE_ENV,
   deployEnv: process.env.DEPLOY_ENV,
 
@@ -24,8 +26,6 @@ export const config = {
     },
   },
 };
-
-export type ConfigType = typeof config;
 
 function validateConfig() {
   const schema = Joi.object({
@@ -58,7 +58,15 @@ function validateConfig() {
       .required(),
   });
 
-  Joi.attempt(config, schema);
+  Joi.attempt(conf, schema);
 }
 
-validateConfig();
+function getConfig() {
+  if (!isConfigValidated) {
+    validateConfig();
+  }
+
+  return conf;
+}
+
+export const config = getConfig();
