@@ -1,5 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 
+import { imageRequestPresignedURL, imageDelete } from "./src/functions";
+
 const serverlessConfiguration: AWS = {
   service: "annabelle",
   frameworkVersion: "2",
@@ -44,7 +46,10 @@ const serverlessConfiguration: AWS = {
     individually: true,
     exclude: ["node_modules/**", "__tests__/**"],
   },
-  functions: {},
+  functions: {
+    imageRequestPresignedURL,
+    imageDelete,
+  },
 };
 
 module.exports = serverlessConfiguration;
